@@ -1,3 +1,5 @@
 g++ -c matrix_operations.cpp
 g++ -c main.cpp
 g++ matrix_operations.o main.o -o program
+
+по итогам выполнения скриптов появился файл program
