@@ -1,0 +1,60 @@
+Формулировка задания: необходимо выполнить процедуры из Python через CTypes/Cython/PyBlind11 и измерить времена
+
+Решение:
+1) компиляция код C++ в объектный файл: g++ -c -fPIC matrix_operation.cpp -o matrix_operation.o
+2) компиляция объектного файла в динамическую библиотеку: g++ -shared -o libmatrix_operation.so matrix_operation.o
+3) исправить ошибки (при необходимости) и выполнить скрипт:
+
+    import ctypes
+    import random
+    import time
+
+    # Загрузка динамической библиотеки
+    lib = ctypes.CDLL('./libmatrix_operation.so')
+
+    # Определение типов аргументов и возвращаемого значения функции
+    lib.multiplyMatrices.argtypes = [ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int), ctypes.POINTER(ctypes.c_int), ctypes.c_int, ctypes.c_int, ctypes.c_int, ctypes.c_int]
+    lib.multiplyMatrices.restype = None
+
+    # Создание матриц и вектора
+    firstMatrix = (ctypes.c_int * (512 * 512))()
+    secondMatrix = (ctypes.c_int * (512 * 512))()
+    result = (ctypes.c_int * (512 * 512))()
+    vector = (ctypes.c_int * 512)()
+    resultVector = (ctypes.c_int * 512)()
+
+    # Заполнение матриц и вектора рандомными числами
+    for i in range(512):
+        for j in range(512):
+            firstMatrix[i * 512 + j] = random.randint(0, 99)
+            secondMatrix[i * 512 + j] = random.randint(0, 99)
+        vector[i] = random.randint(0, 99)
+
+    # Замер времени начала работы
+    start_time = time.time()
+
+    # Вызов функции
+    lib.multiplyMatrices(firstMatrix, secondMatrix, result, 512, 512, 512, 512)
+
+    # Вывод результата
+    for i in range(512):
+        for j in range(512):
+            print(result[i * 512 + j], end=' ')
+        print()
+
+    lib.multiplyMatrixByVector(firstMatrix, vector, resultVector, 512, 512)
+
+    # Вывод результата
+    for i in range(512):
+        print(resultVector[i], end=' ')
+    print()
+
+    # Замер времени окончания работы
+    end_time = time.time()
+
+    # Вывод времени работы программы
+    print("Время работы программы: ", end_time - start_time, " секунд")
+    
+
+
+Итого: Время работы программы:  0.6609771251678467  секунд
