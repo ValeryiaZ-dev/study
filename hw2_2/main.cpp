@@ -1,58 +1,43 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "matrix_operation.h"
 
 using namespace std;
 
 int main() {
-    int firstMatrix[10][10], secondMatrix[10][10], result[10][10], rowFirst, columnFirst, rowSecond, columnSecond;
+    int firstMatrix[512][512], secondMatrix[512][512], result[512][512];
+    int vector[512], resultVector[512];
 
-    cout << "Введите количество строк и столбцов первой матрицы: ";
-    cin >> rowFirst >> columnFirst;
+    // Инициализация генератора случайных чисел
+    srand(time(0));
 
-    cout << "Введите элементы первой матрицы: " << endl;
-    for (int i = 0; i < rowFirst; ++i)
-        for (int j = 0; j < columnFirst; ++j) {
-            cin >> firstMatrix[i][j];
+    // Заполнение матриц и вектора рандомными числами
+    for (int i = 0; i < 512; ++i) {
+        for (int j = 0; j < 512; ++j) {
+            firstMatrix[i][j] = rand() % 100;
+            secondMatrix[i][j] = rand() % 100;
         }
-
-    cout << "Введите количество строк и столбцов второй матрицы: ";
-    cin >> rowSecond >> columnSecond;
-
-    cout << "Введите элементы второй матрицы: " << endl;
-    for (int i = 0; i < rowSecond; ++i)
-        for (int j = 0; j < columnSecond; ++j) {
-            cin >> secondMatrix[i][j];
-        }
-
-    // Проверка, можно ли умножить матрицы
-    if (columnFirst != rowSecond) {
-        cout << "Ошибка! Количество столбцов первой матрицы должно быть равно количеству строк второй матрицы." << endl;
-        return -1;
+        vector[i] = rand() % 100;
     }
 
-    multiplyMatrices(firstMatrix, secondMatrix, result, rowFirst, columnFirst, rowSecond, columnSecond);
+    multiplyMatrices(firstMatrix, secondMatrix, result, 512, 512, 512, 512);
 
     cout << "Результат умножения матриц: " << endl;
-    for (int i = 0; i < rowFirst; ++i)
-        for (int j = 0; j < columnSecond; ++j) {
+    for (int i = 0; i < 512; ++i)
+        for (int j = 0; j < 512; ++j) {
             cout << result[i][j] << "  ";
-            if (j == columnSecond - 1)
+            if (j == 511)
                 cout << endl;
         }
 
-    int vector[10], resultVector[10];
-
-    cout << "Введите элементы вектора: " << endl;
-    for (int i = 0; i < columnFirst; ++i) {
-        cin >> vector[i];
-    }
-
-    multiplyMatrixByVector(firstMatrix, vector, resultVector, rowFirst, columnFirst);
+    multiplyMatrixByVector(firstMatrix, vector, resultVector, 512, 512);
 
     cout << "Результат умножения матрицы на вектор: " << endl;
-    for (int i = 0; i < rowFirst; ++i) {
+    for (int i = 0; i < 512; ++i) {
         cout << resultVector[i] << "  ";
     }
 
     return 0;
 }
+
