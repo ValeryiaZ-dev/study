@@ -1,5 +1,6 @@
 """
-решение с использованием библиотеки mpi.
+Решение аналогичной задачи, но с использованием библиотеки mpi.
+Запускается так: mpirun -np 2 python wolfram_automation_upd.py 30 output.txt для правила 30
 """
 
 from mpi4py import MPI
