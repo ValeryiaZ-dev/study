@@ -1,0 +1,1 @@
+Пробовала сделать простую сеть для определения того, кошка или собака на изображении: https://colab.research.google.com/drive/1DGU8Zhs_UIKR1mDpSjLk_k1l_gpytiaL#scrollTo=dmeOA0UHr1uV
