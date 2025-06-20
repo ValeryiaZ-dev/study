@@ -19,3 +19,5 @@ hw4: Skills - graph problems.
 1) Find and prepare a dataset of the Moscow or London underground to solve a standard Pagerank problem. Display the top 5 underground stations according to such ranking.
 2) Apply the Simrank method to the Moscow subway graph.
 3) Generate random sparse graphs and compare the performance of Pagerank implementations with and without CSR format.
+
+And trying to make neural networks (CV).
